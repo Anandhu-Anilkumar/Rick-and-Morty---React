@@ -1,0 +1,40 @@
+* {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    font-family: 'RMFont';
+    font-weight: $font-regular;
+    color: $color-black;
+    font-size: 16px;
+    line-height: 1.5;
+    width: 100%;
+    min-height: 100%;
+    scroll-behavior: smooth;
+    font-weight: $font-regular;
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.rm-content-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 $spacer-3;
+}
+
+
+@include desktop {
+    .rm-content-wrapper {
+        padding: 0 $spacer-5;
+    }
+}

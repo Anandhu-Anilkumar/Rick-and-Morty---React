@@ -1,0 +1,239 @@
+@import "styles/reset";
+@import "styles/breakpoint";
+@import "styles/color";
+@import "styles/font";
+@import "styles/layout";
+@import "styles/base";
+
+
+.rm-content-wrapper {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 $spacer-3;
+}
+
+.rm-characters {
+    background-color: $color-black-1;
+    padding: $spacer-3 0;
+
+    &__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: $spacer-5;
+    }
+
+    &__item {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &__flip {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &__image {
+        width: 100%;
+        height: 300px;
+        cursor: pointer;
+    }
+
+    &__details {
+        width: 100%;
+        background-color: $color-blue;
+        color: $color-white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: $spacer-3;
+        padding: $spacer-3;
+    }
+
+    &__location {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: $spacer-2;
+    }
+
+    &__map {
+        width: 25px;
+        height: 25px;
+    }
+
+    &__map-fill {
+        fill: $color-white;
+    }
+
+    &__place {
+        width: 100%;
+        font-weight: $font-medium;
+    }
+
+    &__url {
+        color: $color-white;
+        font-size: 18px;
+        text-decoration: none;
+        border-bottom: 1px solid $color-white;
+    }
+
+    &__list {
+        padding: 0 0 0 $spacer-3;
+    }
+
+    &__list-item {
+        padding: 0 0 $spacer-2 0;
+        font-size: 12px;
+    }
+
+    &__content {
+        background-color: $color-black;
+        color: $color-white;
+        width: 100%;
+        min-height: 100px;
+        padding: $spacer-2 $spacer-3;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    &__name {
+        width: 100%;
+        font-size: 25px;
+        font-weight: $font-bold;
+    }
+
+    &__highlights {
+        font-size: 18px;
+        font-weight: $font-semi-bold;
+        color: $color-white;
+        padding: $spacer-1 $spacer-2;
+        border-radius: 25px;
+
+        &--gender {
+            background-color: $color-red;
+        }
+
+        &--species {
+            background-color: $color-white;
+            color: $color-red;
+        }
+
+        &--status {
+            background-color: $color-red;
+        }
+    }
+
+    &__modal {
+        width: 100%;
+        padding: $spacer-3;
+        background-color: $color-black-2;
+        color: $color-white;
+        position: fixed;
+        top: 0;
+    }
+
+    &__heading {
+        width: 80%;
+        font-size: 30px;
+        padding: 0 0 $spacer-3 0;
+        position: relative;
+    }
+
+    &__close {
+        position: absolute;
+        top: 32px;
+        right: 40px;
+        width: 8px;
+        height: 40px;
+        background-color: $color-white;
+        transform: rotate(45deg);
+        cursor: pointer;
+
+        &::after {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 40px;
+            background-color: $color-white;
+            transform: rotate(90deg);
+        }
+    }
+
+    &__episodes {
+        padding: $spacer-2 0;
+        max-height: 70vh;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        gap: $spacer-2;
+    }
+
+    &__episode {
+        text-decoration: none;
+        color: $color-white;
+    }
+}
+
+
+@include desktop {
+
+    .rm-content-wrapper {
+        padding: 0 $spacer-5;
+    }
+
+    .rm-characters {
+        padding: $spacer-5 0;
+
+        &__item {
+            width: calc(50% - 8px);
+        }
+
+        &__modal {
+            padding: $spacer-5;
+        }
+
+        &__heading {
+            width: 90%;
+        }
+
+        &__close {
+            top: 32px;
+            right: 40px;
+        }
+    }
+}
+
+
+@include desktop-only {
+
+    .rm-characters {
+
+        &__item {
+            width: calc(25% - 24px);
+        }
+
+        &__details {
+            height: 285px;
+        }
+
+        &__list {
+            display: block;
+        }
+
+        &:hover {
+            .rm-char {
+                &__flip {
+                    transform: rotateY(180deg);
+                }
+            }
+        }
+    }
+}
