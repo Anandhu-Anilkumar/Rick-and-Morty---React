@@ -5,12 +5,42 @@
 @import "styles/layout";
 @import "styles/base";
 
-
 .rm-content-wrapper {
     width: 100%;
     max-width: 1300px;
     margin: 0 auto;
     padding: 0 $spacer-3;
+}
+
+@keyframes progress-animation {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+.progress {
+    height: 30px;
+    margin: 40vh auto;
+    background-color: $color-white-1;
+    border-radius: 50px;
+
+    &__bar {
+        height: 100%;
+        background-color: $color-green;
+        border-radius: 50px;
+        animation: progress-animation 1s ease-in infinite;
+    }
+
+    &__label {
+        text-align: center;
+        margin: $spacer-4 0;
+        font-size: 1rem;
+        font-weight: $font-medium;
+    }
 }
 
 .rm-characters {
@@ -183,17 +213,28 @@
 }
 
 
-@include desktop {
+@include tablet {
 
     .rm-content-wrapper {
         padding: 0 $spacer-5;
+    }
+
+    .progress {
+
+        &__bar {
+            animation: progress-animation 3s ease-in infinite;
+        }
+    
+        &__label {
+            font-size: 1.75rem;
+        }
     }
 
     .rm-characters {
         padding: $spacer-5 0;
 
         &__item {
-            width: calc(50% - 8px);
+            width: calc(50% - 16px);
         }
 
         &__modal {
@@ -212,7 +253,7 @@
 }
 
 
-@include desktop-only {
+@include desktop {
 
     .rm-characters {
 
