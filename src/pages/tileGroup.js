@@ -5,19 +5,23 @@ function TileGroup() {
   const [characters, setCharacters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showContent, setShowContent] = useState(true);
-  const [charOrigin, setCharOrigin] = useState(null);
-  const [charLocation, setCharLocation] = useState(null);
+  const [charOrigin, setCharOrigin] = useState([]);
+  const [charLocation, setCharLocation] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    // Fetch character data
-    fetch('https://rickandmortyapi.com/api/character')
-      .then(response => response.json())
-      .then(data => {
+    async function fetchData() {
+      try {
+        // Fetch character data
+        const response = await fetch('https://rickandmortyapi.com/api/character');
+        const data = await response.json();
         setCharacters(data.results);
         setIsLoading(true);
-      })
-      .catch(error => console.log(error));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
   }, []);
 
   // if user clicks on tile, flip the tile
@@ -25,19 +29,28 @@ function TileGroup() {
     setShowContent(!showContent);
   }
 
-  function handleTileClick(originDimension, currentDimension) {
-    // Fetch location data for the character's origin URL
-    fetch(originDimension)
-      .then(response => response.json())
-      .then(data => setCharOrigin(data))
-      .catch(error => console.log(error));
+  async function handleTileClick(originDimension, currentDimension, index) {
+    try {
+      // Fetch location data for the character's origin URL
+      const originResponse = await fetch(originDimension);
+      const originData = await originResponse.json();
+      setCharOrigin(prevState => {
+        const newState = [...prevState];
+        newState[index] = originData;
+        return newState;
+      });
 
-    // Fetch location data for the character's current location URL
-    fetch(currentDimension)
-      .then(response => response.json())
-      .then(data => setCharLocation(data))
-      .catch(error => console.log(error));
-
+      // Fetch location data for the character's current location URL
+      const locationResponse = await fetch(currentDimension);
+      const locationData = await locationResponse.json();
+      setCharLocation(prevState => {
+        const newState = [...prevState];
+        newState[index] = locationData;
+        return newState;
+      });
+    } catch (error) {
+      console.log(error);
+    }
     flipTile();
   }
 
@@ -63,7 +76,7 @@ function TileGroup() {
             {characters.map((character, index) => (
               <div key={character.id} className="rm-characters__item" onClick={modalOpen}>
                 {/* flip tile when user clicks on it */}
-                <div className="rm-characters__flip" onClick={() => handleTileClick(character.origin.url, character.location.url)}>
+                <div className="rm-characters__flip" onClick={() => handleTileClick(character.origin.url, character.location.url, index)}>
                   {/* if boolean flag is set true, show image; else show content */}
                   {showContent ?
                     <img className="rm-characters__image" src={character.image} alt={character.name} /> :
@@ -74,8 +87,8 @@ function TileGroup() {
                         </span>
                         <ul className="rm-characters__list">
                           <li className="rm-characters__list-item">{character.origin.name}</li>
-                          <li className="rm-characters__list-item">Dimension: {charOrigin[index].dimension}</li>
-                          <li className="rm-characters__list-item">Amount of residents: {charOrigin[index].residents.length}</li>
+                          <li className="rm-characters__list-item">Dimension: {charOrigin[index]?.dimension}</li>
+                          <li className="rm-characters__list-item">Amount of residents: {charOrigin[index]?.residents.length}</li>
                         </ul>
                       </div>
                       <div className="rm-characters__location">
@@ -84,8 +97,8 @@ function TileGroup() {
                         </span>
                         <ul className="rm-characters__list">
                           <li className="rm-characters__list-item">{character.location.name}</li>
-                          <li className="rm-characters__list-item">Dimension: {charLocation[index].dimension}</li>
-                          <li className="rm-characters__list-item">Amount of residents: {charLocation[index].residents.length}</li>
+                          <li className="rm-characters__list-item">Dimension: {charLocation[index]?.dimension}</li>
+                          <li className="rm-characters__list-item">Amount of residents: {charLocation[index]?.residents.length}</li>
                         </ul>
                       </div>
                     </div>
